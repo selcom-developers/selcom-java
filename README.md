@@ -1,4 +1,4 @@
-# selcom-java
+# selcom4j
 
 Community Java client for the Selcom API gateway: request signing, a replaceable transport, typed checkout and payout operations, result classification, webhook verification and log redaction.
 
@@ -32,18 +32,18 @@ Maven:
 ```xml
 <dependency>
   <groupId>io.github.selcom-developers</groupId>
-  <artifactId>selcom-client</artifactId>
-  <version>0.1.0</version>
+  <artifactId>selcom4j</artifactId>
+  <version>0.1.1</version>
 </dependency>
 ```
 
 Gradle (Kotlin DSL):
 
 ```kotlin
-implementation("io.github.selcom-developers:selcom-client:0.1.0")
+implementation("io.github.selcom-developers:selcom4j:0.1.1")
 ```
 
-To build from source instead: `git clone https://github.com/selcom-developers/selcom-java.git && cd selcom-java && mvn install`.
+To build from source instead: `git clone https://github.com/selcom-developers/selcom4j.git && cd selcom4j && mvn install`.
 
 ## Quickstart
 

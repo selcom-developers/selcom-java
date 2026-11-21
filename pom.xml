@@ -5,13 +5,13 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>io.github.selcom-developers</groupId>
-  <artifactId>selcom-client</artifactId>
-  <version>0.1.0</version>
+  <artifactId>selcom4j</artifactId>
+  <version>0.1.1</version>
   <packaging>jar</packaging>
 
-  <name>Selcom Client</name>
+  <name>selcom4j</name>
   <description>Community Java client for the Selcom API gateway: request signing, a replaceable transport, typed checkout and payout operations, result classification, webhook verification and log redaction. Not affiliated with Selcom Paytech Ltd.</description>
-  <url>https://github.com/selcom-developers/selcom-java</url>
+  <url>https://github.com/selcom-developers/selcom4j</url>
   <inceptionYear>2026</inceptionYear>
 
   <organization>
@@ -37,15 +37,15 @@
   </developers>
 
   <scm>
-    <connection>scm:git:https://github.com/selcom-developers/selcom-java.git</connection>
-    <developerConnection>scm:git:ssh://git@github.com/selcom-developers/selcom-java.git</developerConnection>
-    <url>https://github.com/selcom-developers/selcom-java</url>
+    <connection>scm:git:https://github.com/selcom-developers/selcom4j.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com/selcom-developers/selcom4j.git</developerConnection>
+    <url>https://github.com/selcom-developers/selcom4j</url>
     <tag>HEAD</tag>
   </scm>
 
   <issueManagement>
     <system>GitHub Issues</system>
-    <url>https://github.com/selcom-developers/selcom-java/issues</url>
+    <url>https://github.com/selcom-developers/selcom4j/issues</url>
   </issueManagement>
 
   <properties>

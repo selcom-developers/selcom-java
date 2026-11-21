@@ -4,6 +4,12 @@ All notable changes to this project are recorded here. The format follows [Keep 
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-11-21
+
+### Changed
+
+- The project is now named selcom4j: Maven coordinates `io.github.selcom-developers:selcom4j`, repository `selcom-developers/selcom4j`, User-Agent `selcom4j/<version>`. The Java package is unchanged.
+
 ## [0.1.0] - 2026-11-21
 
 ### Added
@@ -18,5 +24,6 @@ All notable changes to this project are recorded here. The format follows [Keep 
 - Tests that run the shared spec vectors (signing cases and rejects, response scenarios, webhook samples) from a pinned copy; `SPEC_VERSION` and `scripts/refresh-vectors.sh`.
 - GitHub Actions CI on Java 17, 21 and 25.
 
-[Unreleased]: https://github.com/selcom-developers/selcom-java/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/selcom-developers/selcom-java/releases/tag/v0.1.0
+[Unreleased]: https://github.com/selcom-developers/selcom4j/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/selcom-developers/selcom4j/compare/v0.1.0...v0.1.1
+[0.1.0]: https://github.com/selcom-developers/selcom4j/releases/tag/v0.1.0
