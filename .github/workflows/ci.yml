@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Java ${{ matrix.java }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        java: [17, 21, 25]
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+
+      - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5.7.0
+        with:
+          distribution: temurin
+          java-version: ${{ matrix.java }}
+          cache: maven
+
+      # Static analysis: the compiler runs with -Xlint:all -Werror, javadoc runs with doclint, and the enforcer checks
+      # the Java and Maven versions and dependency convergence. Then tests, then the jar, sources jar and javadoc jar.
+      - name: Verify (lint, test, build)
+        run: mvn --batch-mode --no-transfer-progress verify
+
+  vectors:
+    name: Vectors match the pinned spec
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+
+      # The copy in src/test/resources/vectors must be byte-identical to selcom-spec at the tag in SPEC_VERSION.
+      - name: Compare with selcom-spec
+        run: |
+          set -euo pipefail
+          tag="$(sed -n 's/^tag=//p' SPEC_VERSION)"
+          commit="$(sed -n 's/^commit=//p' SPEC_VERSION)"
+          git clone --quiet --depth 1 --branch "$tag" https://github.com/selcom-developers/selcom-spec.git "$RUNNER_TEMP/spec"
+          test "$(git -C "$RUNNER_TEMP/spec" rev-parse HEAD)" = "$commit"
+          diff -r "$RUNNER_TEMP/spec/vectors" src/test/resources/vectors
+          echo "vectors are byte-identical to selcom-spec $tag"
