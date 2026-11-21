@@ -3,6 +3,8 @@
 
 Community Java client for the Selcom API gateway: request signing, a replaceable transport, typed checkout and payout operations, result classification, webhook verification and log redaction.
 
+Documentation: <https://selcom-developers.github.io/>
+
 > **Not affiliated with Selcom Paytech Ltd.** For API access, credentials, contracts and support, go to Selcom: <https://developers.selcommobile.com/>.
 
 - Java 17 or later.
