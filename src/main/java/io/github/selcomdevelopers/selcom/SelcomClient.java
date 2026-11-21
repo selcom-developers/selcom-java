@@ -319,7 +319,7 @@ public final class SelcomClient {
         if (signed.body() != null) {
             headers.put("Content-Type", "application/json");
         }
-        headers.put("User-Agent", "selcom-java/" + VERSION);
+        headers.put("User-Agent", "selcom4j/" + VERSION);
         TransportRequest request = new TransportRequest(operation.method(), uri, headers, signed.body(),
                 config.timeoutsFor(operation.kind()));
 
@@ -356,7 +356,7 @@ public final class SelcomClient {
     }
 
     private static String loadVersion() {
-        try (InputStream in = SelcomClient.class.getResourceAsStream("/selcom-client.properties")) {
+        try (InputStream in = SelcomClient.class.getResourceAsStream("/selcom4j.properties")) {
             if (in != null) {
                 Properties props = new Properties();
                 props.load(in);
