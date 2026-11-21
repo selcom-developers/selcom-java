@@ -1,4 +1,5 @@
 # selcom4j
+[![CI](https://github.com/selcom-developers/selcom4j/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/selcom-developers/selcom4j/actions/workflows/ci.yml)
 
 Community Java client for the Selcom API gateway: request signing, a replaceable transport, typed checkout and payout operations, result classification, webhook verification and log redaction.
 
