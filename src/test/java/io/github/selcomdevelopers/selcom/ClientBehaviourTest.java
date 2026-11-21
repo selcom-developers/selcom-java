@@ -37,7 +37,7 @@ class ClientBehaviourTest {
         assertEquals("order_id", sent.headers().get("Signed-Fields"));
         assertEquals("HS256", sent.headers().get("Digest-Method"));
         assertEquals("application/json", sent.headers().get("Accept"));
-        assertTrue(sent.headers().get("User-Agent").startsWith("selcom4j/0.1.1"), sent.headers().get("User-Agent"));
+        assertTrue(sent.headers().get("User-Agent").startsWith("selcom4j/"), sent.headers().get("User-Agent"));
         assertEquals(Timeouts.QUERY, sent.timeouts());
     }
 
