@@ -3,16 +3,14 @@
 
 Community Java client for the Selcom API gateway: request signing, a replaceable transport, typed checkout and payout operations, result classification, webhook verification and log redaction.
 
-> **Not affiliated with Selcom Paytech Ltd.** This is an independent, community-maintained project under the Apache License 2.0. "Selcom" names the API it talks to. For API access, credentials, contracts and support, go to Selcom: <https://developers.selcommobile.com/>. Where this client and the portal disagree about the API, the portal wins.
+> **Not affiliated with Selcom Paytech Ltd.** For API access, credentials, contracts and support, go to Selcom: <https://developers.selcommobile.com/>.
 
-- Java 17 or later. Tested on 17, 21 and 25.
+- Java 17 or later.
 - One runtime dependency: Jackson databind, for JSON.
-- Every layer is usable on its own and replaceable: signer, transport, operations, results, webhooks, redaction.
 
 ## Contents
 
 - [Install](#install)
-- [Before your first call](#before-your-first-call)
 - [Quickstart](#quickstart)
 - [Configuration](#configuration)
 - [Operations](#operations)
@@ -122,14 +120,12 @@ One typed method per operation. Requests are records (or builders for order crea
 | `walletCashInQuery` | `Requests.WalletCashInQuery` | `walletcashin.query` | status query |
 | `vendorBalance` | `Requests.VendorBalance` | `vendor.balance` | read |
 
-Submitting and querying are separate methods. Nothing hides a query inside a submit.
-
 Notes:
 
 - **Money** is `Money(units, currency)`: whole units, never a floating-point number. The currency is always explicit; payouts accept TZS only and reject anything else. Amounts in responses are strings (sometimes `"10,000"`); `Money.parse` reads them strictly and rejects fractions.
 - **URLs** (`redirectUrl`, `cancelUrl`, `webhookUrl`) are given as plain URLs and base64-encoded for you before signing, as the API requires. `payment_gateway_url` in responses is decoded for you; the raw value is kept.
 - **Billing and shipping** are sent as dotted keys (`billing.firstname`), never as nested objects.
-- **IDs**: `transid` and `order_id` must be unique per vendor and are the idempotency keys. Until Selcom publishes limits, keep them to 30 characters or fewer using `A-Z a-z 0-9 -`.
+- **IDs**: `transid` and `order_id` must be unique per vendor and are the idempotency keys. Keep them to 30 characters or fewer using `A-Z a-z 0-9 -`.
 - Anything this library does not model yet: `client.execute(Operation, Map)` signs, sends and classifies parameters you built yourself, and `client.execute(ApiRequest, reader)` does the same for your own request type.
 
 ## Results and error handling
@@ -258,4 +254,4 @@ Tests run every case and reject in `vectors/signing.json`, every scenario in `ve
 
 ## License
 
-[Apache License 2.0](LICENSE). Not affiliated with Selcom Paytech Ltd.
+[Apache License 2.0](LICENSE).
