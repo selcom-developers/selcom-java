@@ -45,17 +45,6 @@ implementation("io.github.selcom-developers:selcom-client:0.1.0")
 
 To build from source instead: `git clone https://github.com/selcom-developers/selcom-java.git && cd selcom-java && mvn install`.
 
-## Before your first call
-
-### IP whitelisting
-
-Selcom's gateway accepts requests only from server IP addresses that Selcom has whitelisted (allowlisted) for your account. Sandbox and production are whitelisted separately.
-
-- Before your first call, send Selcom the public outbound (egress) IP address of every server that will call the API, for each environment you use.
-- Hosts without a fixed outbound address (serverless functions, autoscaling containers, many platform defaults, home or office connections) need a static egress IP, for example through a NAT gateway or a proxy.
-- When servers or hosting change, ask Selcom to update the list before you move traffic.
-- A request from an address that is not whitelisted is rejected by the gateway, and Selcom does not document the exact response. If your first sandbox call fails, check the whitelisting first. Treat such a rejection as a configuration problem, never as a payment outcome, and never pay again because of it.
-
 ## Quickstart
 
 ```java
@@ -194,7 +183,7 @@ The ID is the idempotency key. The gateway refuses a second transaction with an 
 7. **Close an unpaid order with `cancelOrder`.** A completed order cannot be cancelled, so a successful cancel proves it was never paid. A `FAILED` from `orderStatus` describes the latest attempt only; the order can still be paid until it expires or is cancelled. If a `walletPayment` fails outright, cancel the order on a best-effort basis.
 8. **Apply results once.** Apply them through one function keyed on `(order_id, transid)`, under a row lock or a compare-and-set, so that a webhook and a poll arriving together cannot both win, and a later `FAILED` never overwrites a `SUCCESS`.
 
-A status query can also fail because the query itself was rejected (a bad signature, an address not on the allowlist). Do not pay again on the strength of a single `FAILED` from a status query without reading its `resultCode()` and `message()`.
+A status query can also fail because the query itself was rejected (for example, a bad signature). Do not pay again on the strength of a single `FAILED` from a status query without reading its `resultCode()` and `message()`.
 
 ## Webhooks
 
