@@ -4,8 +4,6 @@ Community Java client for the Selcom API gateway: request signing, a replaceable
 
 > **Not affiliated with Selcom Paytech Ltd.** This is an independent, community-maintained project under the Apache License 2.0. "Selcom" names the API it talks to. For API access, credentials, contracts and support, go to Selcom: <https://developers.selcommobile.com/>. Where this client and the portal disagree about the API, the portal wins.
 
-**Status: version 0.1.0, not yet published to Maven Central.** Until it is, build it from source (see [Install](#install)).
-
 Signing, results and webhooks follow the shared spec, [selcom-spec](https://github.com/selcom-developers/selcom-spec), pinned in [`SPEC_VERSION`](SPEC_VERSION). The spec is the source of truth.
 
 - Java 17 or later. Tested on 17, 21 and 25.
@@ -29,15 +27,7 @@ Signing, results and webhooks follow the shared spec, [selcom-spec](https://gith
 
 ## Install
 
-Not published yet. Build and install to your local Maven repository:
-
-```
-git clone https://github.com/selcom-developers/selcom-java.git
-cd selcom-java
-mvn install
-```
-
-Then depend on it:
+Maven:
 
 ```xml
 <dependency>
@@ -46,6 +36,14 @@ Then depend on it:
   <version>0.1.0</version>
 </dependency>
 ```
+
+Gradle (Kotlin DSL):
+
+```kotlin
+implementation("io.github.selcom-developers:selcom-client:0.1.0")
+```
+
+To build from source instead: `git clone https://github.com/selcom-developers/selcom-java.git && cd selcom-java && mvn install`.
 
 ## Before your first call
 
@@ -224,6 +222,7 @@ if (verdict.shouldProcess()) {
 | `INVALID` | 401 | No. Log it, redacted |
 | `STALE` | 401 | No. Log it, redacted |
 
+- If your `ReplayStore` fails, `verify` throws `ReplayStoreException`: answer 5xx so the gateway delivers again.
 - The signed field list must include `order_id` and `transid`, and a signed name or value may not contain `&`; otherwise the verdict is `INVALID`.
 - `VALID` vouches only for the fields named in `Signed-Fields`. The amount is usually not one of them.
 - Use `new WebhookVerifier(signer, clock, window, replayStore)` for another window or clock, and plug a shared `ReplayStore` in when more than one process receives webhooks. The in-memory store is per process.

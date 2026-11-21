@@ -4,7 +4,7 @@ All notable changes to this project are recorded here. The format follows [Keep 
 
 ## [Unreleased]
 
-First version, `0.1.0`, not yet released or published.
+## [0.1.0] - 2026-11-21
 
 ### Added
 
@@ -17,3 +17,6 @@ First version, `0.1.0`, not yet released or published.
 - Log redaction helper (`Redactor`).
 - Tests that run the shared spec vectors (signing cases and rejects, response scenarios, webhook samples) from a pinned copy; `SPEC_VERSION` and `scripts/refresh-vectors.sh`.
 - GitHub Actions CI on Java 17, 21 and 25.
+
+[Unreleased]: https://github.com/selcom-developers/selcom-java/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/selcom-developers/selcom-java/releases/tag/v0.1.0
