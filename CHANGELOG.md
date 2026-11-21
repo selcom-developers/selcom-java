@@ -4,6 +4,12 @@ All notable changes to this project are recorded here. The format follows [Keep 
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-11-21
+
+### Added
+
+- Installation through JitPack (`com.github.selcom-developers:selcom4j`).
+
 ## [0.1.1] - 2026-11-21
 
 ### Changed
@@ -24,6 +30,7 @@ All notable changes to this project are recorded here. The format follows [Keep 
 - Tests that run the shared spec vectors (signing cases and rejects, response scenarios, webhook samples) from a pinned copy; `SPEC_VERSION` and `scripts/refresh-vectors.sh`.
 - GitHub Actions CI on Java 17, 21 and 25.
 
-[Unreleased]: https://github.com/selcom-developers/selcom4j/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/selcom-developers/selcom4j/compare/v0.1.2...HEAD
+[0.1.2]: https://github.com/selcom-developers/selcom4j/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/selcom-developers/selcom4j/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/selcom-developers/selcom4j/releases/tag/v0.1.0
