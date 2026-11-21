@@ -28,6 +28,9 @@ import java.util.Objects;
  * {@code orderStatus} first, every time. {@link Verdict#VALID} vouches only for the fields named in {@code Signed-Fields};
  * anything else in the body, the amount included, may have been changed in transit.
  *
+ * <p>{@code verify} never throws for bad input: anything malformed is {@link Verdict#INVALID}. The one exception is a failing
+ * {@link ReplayStore}, which raises {@link ReplayStoreException}; answer 5xx so the gateway delivers again.
+ *
  * <p>Read the raw body before any framework parses it, and pass it unchanged. The verifier is thread-safe if its
  * {@link ReplayStore} is.
  */
@@ -114,6 +117,8 @@ public final class WebhookVerifier {
     private Verdict verifyInternal(Map<String, String> headers, String rawBody) {
         try {
             return check(headers, rawBody);
+        } catch (ReplayStoreException e) {
+            throw e;
         } catch (RuntimeException e) {
             // Untrusted input must never make verify() throw.
             return Verdict.INVALID;
@@ -182,7 +187,13 @@ public final class WebhookVerifier {
         // Remember the digest until the window around the signed time has passed, so a late replay is still caught.
         Instant signed = time.toInstant();
         Instant expiry = (signed.isAfter(now) ? signed : now).plus(window);
-        if (!replayStore.markIfNew(digest, now, expiry)) {
+        boolean isNew;
+        try {
+            isNew = replayStore.markIfNew(digest, now, expiry);
+        } catch (RuntimeException e) {
+            throw new ReplayStoreException(e);
+        }
+        if (!isNew) {
             return Verdict.REPLAY;
         }
         return Verdict.VALID;

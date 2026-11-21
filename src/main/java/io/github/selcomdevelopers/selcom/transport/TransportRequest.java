@@ -31,7 +31,7 @@ public record TransportRequest(HttpMethod method, URI uri, Map<String, String> h
     /** Redacts the headers, the query string and the body, so a request can be logged safely. */
     @Override
     public String toString() {
-        Redactor redactor = uri.getRawPath().startsWith("/v1/walletcashin/")
+        Redactor redactor = uri.getRawPath().contains("/v1/walletcashin/")
                 ? Redactor.treatingUtilityRefAsPhone() : Redactor.defaults();
         String query = uri.getRawQuery();
         String target = uri.getScheme() + "://" + uri.getRawAuthority() + uri.getRawPath()

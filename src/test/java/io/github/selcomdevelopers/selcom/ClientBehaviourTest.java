@@ -216,6 +216,38 @@ class ClientBehaviourTest {
     }
 
     @Test
+    void theDefaultTransportRefusalSurfacesAsConfigurationExceptionNotTransportException() {
+        String property = "jdk.httpclient.enableAllMethodRetry";
+        String old = System.getProperty(property);
+        System.setProperty(property, "true");
+        try {
+            SelcomConfig config = SelcomConfig.builder().customBaseUrl("http://localhost:1")
+                    .credentials("test-key-0001", "test-secret-0001").vendor("TILL123").pin("4321").build();
+            SelcomClient client = SelcomClient.builder(config).clock(Samples.CLOCK).build();
+            assertThrows(ConfigurationException.class,
+                    () -> client.utilityPayment(new Requests.UtilityPayment("TXN-UTL-0001", "LUKU", "01234567890", Money.tzs(5000), null)));
+        } finally {
+            if (old == null) {
+                System.clearProperty(property);
+            } else {
+                System.setProperty(property, old);
+            }
+        }
+    }
+
+    @Test
+    void walletCashInRequestsAreMaskedEvenUnderACustomBasePathPrefix() {
+        SelcomConfig config = SelcomConfig.builder().customBaseUrl("https://proxy.example.com/selcom")
+                .credentials("test-key-0001", "test-secret-0001").vendor("TILL123").pin("4321").build();
+        FakeTransport transport = FakeTransport.replying(200, OK);
+        SelcomClient.builder(config).transport(transport).clock(Samples.CLOCK).build()
+                .walletNameLookup(new Requests.WalletNameLookup("CASHIN", "255700000002", "TXN-NML-0001"));
+        assertEquals("/selcom/v1/walletcashin/namelookup", transport.last().uri().getPath());
+        String printed = transport.last().toString();
+        assertFalse(printed.contains("255700000002"), printed);
+    }
+
+    @Test
     void aNonJsonBodyOnAPaymentIsAmbiguousNotAnError() {
         Result<Map<String, Object>> result = Samples.client(FakeTransport.replying(502, "<html>Bad gateway</html>"))
                 .utilityPayment(new Requests.UtilityPayment("TXN-UTL-0001", "LUKU", "01234567890", Money.tzs(5000), null));

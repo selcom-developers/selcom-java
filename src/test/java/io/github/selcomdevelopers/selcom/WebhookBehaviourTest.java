@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import io.github.selcomdevelopers.selcom.signing.Hs256Signer;
 import io.github.selcomdevelopers.selcom.webhook.InMemoryReplayStore;
+import io.github.selcomdevelopers.selcom.webhook.ReplayStoreException;
 import io.github.selcomdevelopers.selcom.webhook.Verdict;
 import io.github.selcomdevelopers.selcom.webhook.WebhookPayload;
 import io.github.selcomdevelopers.selcom.webhook.WebhookVerifier;
@@ -113,12 +114,12 @@ class WebhookBehaviourTest {
     }
 
     @Test
-    void aFailingReplayStoreGivesInvalidNotAnException() {
+    void aFailingReplayStoreRaisesReplayStoreException() {
         WebhookVerifier verifier = WebhookVerifier.hs256(SECRET, Clock.fixed(Instant.parse("2026-11-21T07:31:00Z"), ZoneOffset.UTC),
                 WebhookVerifier.DEFAULT_WINDOW, (digest, now, expiresAt) -> {
                     throw new IllegalStateException("store down");
                 });
-        assertEquals(Verdict.INVALID, verifier.verify(signed("2026-11-21T10:30:46+03:00"), BODY));
+        assertThrows(ReplayStoreException.class, () -> verifier.verify(signed("2026-11-21T10:30:46+03:00"), BODY));
     }
 
     @Test

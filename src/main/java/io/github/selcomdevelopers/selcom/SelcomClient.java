@@ -345,6 +345,9 @@ public final class SelcomClient {
             return response;
         } catch (TransportException e) {
             throw e;
+        } catch (ConfigurationException e) {
+            // Nothing was sent: surface it as documented.
+            throw e;
         } catch (RuntimeException e) {
             // A custom transport failed in a way it did not classify. The request may have been written.
             throw new TransportException(TransportException.Outcome.UNKNOWN_OUTCOME,
