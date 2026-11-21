@@ -5,8 +5,6 @@ Community Java client for the Selcom API gateway: request signing, a replaceable
 
 > **Not affiliated with Selcom Paytech Ltd.** This is an independent, community-maintained project under the Apache License 2.0. "Selcom" names the API it talks to. For API access, credentials, contracts and support, go to Selcom: <https://developers.selcommobile.com/>. Where this client and the portal disagree about the API, the portal wins.
 
-Signing, results and webhooks follow the shared spec, [selcom-spec](https://github.com/selcom-developers/selcom-spec), pinned in [`SPEC_VERSION`](SPEC_VERSION). The spec is the source of truth.
-
 - Java 17 or later. Tested on 17, 21 and 25.
 - One runtime dependency: Jackson databind, for JSON.
 - Every layer is usable on its own and replaceable: signer, transport, operations, results, webhooks, redaction.
